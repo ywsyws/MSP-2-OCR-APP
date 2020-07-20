@@ -1,0 +1,12 @@
+body{
+    text-align: justify;
+    padding: 0.5%;
+} 
+
+.centered{
+    text-align: center;
+}
+
+.title{
+    margin-bottom: 10%;
+}
