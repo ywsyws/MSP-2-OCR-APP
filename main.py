@@ -6,12 +6,10 @@ import time
 from requests import get, post
 import urllib
 import os
-# from matplotlib.patches import Polygon
 
 subscription_key = "73ce4df610864335bd26c971426cb6f6"
 vision_base_url = "https://uksouth.api.cognitive.microsoft.com/vision/v2.0/"
 text_recognition_url = vision_base_url + "recognizeText"
-
 
 app = Flask(__name__)
 
