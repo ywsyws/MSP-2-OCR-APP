@@ -5,6 +5,13 @@ import json
 import time
 from requests import get, post
 import urllib
+import os
+# from matplotlib.patches import Polygon
+
+subscription_key = "73ce4df610864335bd26c971426cb6f6"
+vision_base_url = "https://uksouth.api.cognitive.microsoft.com/vision/v2.0/"
+text_recognition_url = vision_base_url + "recognizeText"
+
 
 app = Flask(__name__)
 
@@ -41,6 +48,28 @@ def add_comment():
     # return render_template("index.html")
 
 def get_text_from_url(url_image):
-            
-    return "Fichier sauvegardé"
+
+    headers  = {'Ocp-Apim-Subscription-Key': subscription_key}
+    params   = {'mode' : 'Handwritten'}
+    data     = {'url': url_image}
+    response = requests.post(text_recognition_url, headers=headers, params=params, json=data)
+    response.raise_for_status()
+    
+    operation_url = response.headers["Operation-Location"]
+    analysis = {}
+
+    while not "recognitionResult" in analysis:
+        response_final = requests.get(operation_url, headers=headers)
+        analysis       = response_final.json()
+        time.sleep(1)
+    
+    polygons = [(line["boundingBox"], line["text"]) for line in analysis["recognitionResult"]["lines"]]
+
+    text_ocr=[]
+    for polygon in polygons:
+        text_ocr.append(polygon[1])
+    
+    string=' '.join(text_ocr)
+
+    return string
     
