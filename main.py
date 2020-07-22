@@ -18,17 +18,17 @@ def add_comment():
     if request.method == "POST":
         
         req = request.form.to_dict()
-        comment = req["comment"]
+        comment = req["comment"] 
         text = get_text_from_url(comment)
         return Response("<p>" + text + "</p>") 
         # return render_template("/index.html")
 
     
     req_data = request.get_json()
-    comment = req_data['comment']
+    comment = req_data['comment'] 
 
     # Add comment to the list
-    res_data = helper.add_to_list(comment)
+    res_data = helper.add_to_list(comment) ### comment = url
 
     # Return error if comment not added
     if res_data is None:
@@ -36,9 +36,9 @@ def add_comment():
         return response
 
     # Return response
-    response = Response(json.dumps(res_data), mimetype='application/json')
+    # response = Response(json.dumps(res_data), mimetype='application/json')
 
-    return render_template("index.html")
+    # return render_template("index.html")
 
 def get_text_from_url(url_image):
             
