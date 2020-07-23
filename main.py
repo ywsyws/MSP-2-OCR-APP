@@ -22,15 +22,15 @@ def add_comment():
     # Get comment from the POST body
     if request.method == "POST":
         
-        req = request.form.to_dict()
+        req     = request.form.to_dict()
         comment = req["comment"] 
-        text = get_text_from_url(comment)
+        text    = get_text_from_url(comment)
         return Response("<p>" + text + "</p>") 
         # return render_template("/index.html")
 
     
     req_data = request.get_json()
-    comment = req_data['comment'] 
+    comment  = req_data['comment'] 
 
     # Add comment to the list
     res_data = helper.add_to_list(comment) ### comment = url
@@ -53,19 +53,18 @@ def get_text_from_url(url_image):
     response = requests.post(text_recognition_url, headers=headers, params=params, json=data)
     response.raise_for_status()
     
-    operation_url = response.headers["Operation-Location"]
     analysis = {}
 
     while not "recognitionResult" in analysis:
-        response_final = requests.get(operation_url, headers=headers)
+        response_final = requests.get(response.headers["Operation-Location"], headers=headers)
         analysis       = response_final.json()
         time.sleep(1)
     
-    polygons = [(line["boundingBox"], line["text"]) for line in analysis["recognitionResult"]["lines"]]
-
+    texts = [line["text"] for line in analysis["recognitionResult"]["lines"]]
+    
     text_ocr=[]
-    for polygon in polygons:
-        text_ocr.append(polygon[1])
+    for text in texts:
+        text_ocr.append(text)
     
     string=' '.join(text_ocr)
 
