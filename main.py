@@ -25,7 +25,7 @@ def add_comment():
         req     = request.form.to_dict()
         comment = req["comment"] 
         text    = get_text_from_url(comment)
-        return Response("<p>" + text + "</p>") 
+        return Response("<p style='width:500px;font-size:22px;'>" + text + "</p>") 
         # return render_template("/index.html")
 
     
