@@ -40,7 +40,7 @@ VOLUME [ "/app" ]
 ENV FLASK_APP=main.py FLASK_DEBUG=1
 
 # Define the port
-EXPOSE 8004
+EXPOSE 8006
 
 # Set the default command
-CMD flask run --host=0.0.0.0 --port=8004
+CMD flask run --host=0.0.0.0 --port=8006
