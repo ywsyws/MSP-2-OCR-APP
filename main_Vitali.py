@@ -26,7 +26,6 @@ def add_comment():
         comment = req["comment"]
         text = get_text_from_url(comment)
         return Response("<p>" + text + "</p>") 
-        # return render_template("/index.html")
 
     
     req_data = request.get_json()
